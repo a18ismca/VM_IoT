@@ -1,4 +1,6 @@
-# Streaming sensor data from Ultrasonic Sensor HC-SR04 to the no-code platform Tulip using Thonny IDE, MQTT Explorer and Node-RED.
+# Streaming sensor data from Ultrasonic Sensor HC-SR04 to the no-code platform Tulip using Thonny IDE, MQTT Explorer and Node-RED
+
+As of 26.01.2022, I am still working on this README file.
 
 Written by: Ismet Catovic. Credits to Divya Kara who has done a similar project using MQTT, Node-Red and InfluxDB to stream sensor data to Grafana. Click on the following link for more details of Divya's project: https://github.com/divyakara/VM-IoT#project-overview
 
@@ -187,19 +189,33 @@ while True:
     try:
       timerCount += 0.5;
       
-      # The distance is printed out on the shell terminal each 0.5 secs
+      # The distance is printed out on the shell terminal each 0.5 seconds
       sleep(0.5)
       distance = sensor.distance_mm(),
       print('Distance:', distance, 'mm')
       print(timerCount)
       
+      # Publish the distances on MQTT. The outputs are represented using the MQTT Explorer.
       mqttc.publish( BTN_TOPIC_DIST, (str(distance).encode()) )
     except OSError as e:
         print("FAILED")
 ```
 
-13. Save the file as a main.py script.
+13. Save the file as a sensor1.py script and run it. If the sensor works properly, the distance will vary for each half second.
 
+#### MQTT Explorer (Keep the sensor1.py script running in Thonny while configuring MQTT Explorer)
+
+14. Download the MQTT Explorer file on the following link: http://mqtt-explorer.com/. Install it.
+
+15. When opening the MQTT Explorer, add a connection and name it as you want. Use the mqtt:// as a protocol and the 172.16.2.7. Use any port you want, I have used port 1883. Save the connection and then press connect. You will receive data from the script running (I will add a picture here.)
+
+#### Tulip.
+
+16. Enter the Machines section in Tulip. If desired, create a new machine type where the machines that you will create are related to the sensors you have setted up.
+
+17. Go the machine type where the machines will be created and add a machine attribute that is related to the distance from the sensor. The data type should be a number.
+
+18. Return to the Machines section and create a machine that belongs to the machine type where the sensors will be stored. When the machine is created, select the same machine and enter configuration...
 
 ### Setting up the sensor with ESP8266 (pictures will come later)
 
