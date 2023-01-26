@@ -12,16 +12,16 @@ The purpose of this project is to explain how to set up two HC-SR04 Ultrasonic S
 
 The first sensor uses the ESP32 device from AZ-Delivery (Fig. 1) and the other sensor uses the Wemos D1 Mini ESP8266 motherboard (Fig 2). Figure 3 shows how the sensor looks like.
 
-Each sensor is placed on separate breadboards.
+Each sensor is connected using separate breadboards. Each 
 
 ### Environment setup
 
 The following were used when setting up the environment for the two sensors:
 
 - Thonny IDE: A beginner-friendly Python editor. Download it by entering the following link: https://thonny.org/
-  - NOTE! Two instances of this IDE are required in order for both sensors to work simultaneously. When installing the IDE and running it, enter Tools > Options >    General > unmark Allow only single Thonny Instance.
+  - NOTE! Two instances of this IDE are required in order for both sensors to work simultaneously. When installing the IDE and running it, enter Tools > Options >          General > unmark Allow only single Thonny Instance.
 - Node-RED: A flow diagram that sends data from Thonny to Tulip using the MQTT.
-  - Node-RED can be accessed by selecting one of the Edge Devices by their IP address available in your local Tulip instance. When entering the menu of the Edge I/O, click on the Node-RED editor link.
+  - Node-RED can be accessed by selecting one of the Edge Devices by their IP address available in your local Tulip instance. When entering the menu of the Edge I/O,       click on the Node-RED editor link.
 - Edge I/O: A Tulip compatible edge device required for sending data between Tulip and Thonny using Node-RED.
 - Tulip Platform: A no-code platform that receives data from the Node-RED diagram created through the Edge IO.
 - Python (latest version)
@@ -50,7 +50,7 @@ python -m esptool
 4. Download the latest version of MicroPython from https://micropython.org/download/#esp32. Select ESP32 by Espressif and download the latest .bin release.
 5. Open Thonny IDE options and enter the Interpreter section. Select MicroPython (ESP32) as the interpreter and select Silicon Labs CP210x USB to UART Bridge (COMx) as the port.
 6. Before pressing OK in the Thonny Options window, click on "Install or update MicroPython" and select the same port you have chosen on the previous step. The firmware is the .bin file downloaded on step 4. Then, select From image file (Keep) as the flash mode and check "Erase flash before installing." Press Install, this process may take a minute. When the installation is done, leave the window and press OK. You are now configuring the motherboard om COMx.
-7. Copy the following HC-SR04 MicroPython Library into a file in Thonny and save the script with the name hcsr04.py to the MicroPython device. The library can be found in https://github.com/rsc1975/micropython-hcsr04 and is not part of the standard MicroPython library by default.
+7. Copy the following HC-SR04 MicroPython Library into a file in Thonny and save the script with the name hcsr04.py to the MicroPython device. The library can be found in https://github.com/rsc1975/micropython-hcsr04 and is not part of the standard MicroPython library by default. It is recommended to save the library under a separate folder, in case,,,
 
 ```
 
@@ -132,7 +132,73 @@ class HCSR04:
 
 ```
 
-8. 
+8. Create a new script with the name sensor1.py. Import the following libraries:
+```
+from machine import Pin, I2C
+from hcsr04 import HCSR04
+from time import sleep
+import dht
+import network
+from umqtt.simple import MQTTClient
+```
+9. Add the following connect_wifi function to the script in order to enable connection to the router.
+
+```
+def connect_wifi(ssid, password):   
+
+#connect to wifi
+  wlan = network.WLAN(network.STA_IF)
+  wlan.active(True)
+  if not wlan.isconnected():
+    print('connecting to network...')
+    wlan.connect(ssid, password)
+    while not wlan.isconnected():
+        pass
+  print('Network config:', wlan.ifconfig())
+  print('Connected to ', ssid)
+```
+Remember to use the def by entering its parameters. The ssid is the name of the WLAN.
+
+10. Connect to the broker by assigning CLIENT_NAME to the broker where the data should be sent. The BROKER_ADDR is assigned to the IP address of the Tulip edge device. When done, define the topics. Use the code below for help.
+
+```
+CLIENT_NAME = '080 Tulip/Work Instructions and TAKT/ESP32/Sensor1'
+BROKER_ADDR = '172.16.2.7'
+mqttc = MQTTClient(CLIENT_NAME, BROKER_ADDR, keepalive=60)
+mqttc.connect()
+
+#Topics
+BTN_TOPIC_DIST = CLIENT_NAME.encode() + b'/distance'
+```
+
+11. Define the sensor by using the HCSR04 class available in hcsr04.py. Set the trigger_pin and the echo_pin according to the circuit diagram.
+
+```
+sensor = HCSR04(trigger_pin=5, echo_pin=18, echo_timeout_us=10000)
+
+graph = ""
+timerCount = 0
+```
+
+12. Copy the code below which runs the sensor and measure its distance.
+
+```
+while True:
+    try:
+      timerCount += 0.5;
+      
+      # The distance is printed out on the shell terminal each 0.5 secs
+      sleep(0.5)
+      distance = sensor.distance_mm(),
+      print('Distance:', distance, 'mm')
+      print(timerCount)
+      
+      mqttc.publish( BTN_TOPIC_DIST, (str(distance).encode()) )
+    except OSError as e:
+        print("FAILED")
+```
+
+13. Save the file as a main.py script.
 
 
 ### Setting up the sensor with ESP8266 (pictures will come later)
