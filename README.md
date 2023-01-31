@@ -38,6 +38,8 @@ Each Thonny IDE instance will have a different intepreter.
 
 1. Setup the motherboard on the breadboard according to the circuit diagram below.
 
+![Circuit Diagram AZ-Delivery ESP32-WROOM-32 jpg](https://user-images.githubusercontent.com/62876523/215798947-b83b623d-9e07-45c1-a751-db97a09bbacb.jpg)
+
 2. Install esptool.py and setuptools by entering the following commands
 ```
 pip install esptool
@@ -227,6 +229,8 @@ while True:
 ### Setting up the sensor with ESP8266 (pictures will come later)
 
 1. Setup the motherboard according to the circuit diagram below.
+
+![Circuit Diagram Wemos D1 Mini ESP8266 jpg](https://user-images.githubusercontent.com/62876523/215798813-8faaef98-5c49-42ef-a10f-ff2121305566.jpg)
 
 2. 
 
