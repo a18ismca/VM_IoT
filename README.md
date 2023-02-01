@@ -1,8 +1,8 @@
-# Streaming sensor data from Ultrasonic Sensor HC-SR04 to the no-code platform Tulip using Thonny IDE, MQTT Explorer and Node-RED
+# Streaming sensor data from Ultrasonic sensor HC-SR04 to the no-code platform Tulip using Thonny IDE, MQTT Explorer and Node-RED
 
 As of 26.01.2022, I am still working on this README file.
 
-Written by Ismet Catovic. Credits to Divya Kara who has done a similar project using MQTT, Node-Red and InfluxDB to stream sensor data to Grafana. Click on the following link for more details of Divya's project: https://github.com/divyakara/VM-IoT#project-overview
+Written by Ismet Catovic. Credits to Divya Kara who has done a similar project using MQTT, Node-Red and InfluxDB to stream sensor data to Grafana. Click on the following link for more details of Divya's project: https://github.com/divyakara/VM-IoT
 
 This project is about connecting the sensors to Tulip.
 
@@ -14,14 +14,26 @@ The purpose of this project is to explain how to set up two HC-SR04 Ultrasonic S
 
 The first sensor uses the ESP32 device from AZ-Delivery (Fig. 1) and the other sensor uses the Wemos D1 Mini ESP8266 motherboard (Fig 2). Figure 3 shows how the sensor looks like.
 
-Each sensor is connected using separate breadboards. Each 
+![ESP32-WROOM-32 Motherboard](https://user-images.githubusercontent.com/62876523/215799986-183ab8ab-fea5-4151-a419-ea437d50762f.png)
+
+Figure 1. The ESP32-WROOM-32 motherboard manufactured by AZ-Delivery.
+
+![Lolin Wemos D1](https://user-images.githubusercontent.com/62876523/215805672-2d8db976-6757-4d0f-ac14-a6785e92d703.jpeg)
+
+Figure 2. The Wemos D1 ESP8266 motherboard manufactured by Lolin.
+
+![202860728-c3ccac67-ddfc-421f-8d99-2e3cc3d8aa6a](https://user-images.githubusercontent.com/62876523/215801924-347cf8d5-c40e-4202-9e24-90afd702e666.png)
+
+Figure 3. The HC-SR04 Ultrasonic sensor.
+
+Each sensor and motherboard is using separate breadboards.
 
 ### Environment setup
 
 The following were used when setting up the environment for the two sensors:
 
 - Thonny IDE: A beginner-friendly Python editor. Download it by entering the following link: https://thonny.org/
-  - NOTE! Two instances of this IDE are required in order for both sensors to work simultaneously. When installing the IDE and running it, enter Tools > Options >          General > unmark Allow only single Thonny Instance.
+  - NOTE! Two instances of this IDE are required in order for both sensors to work simultaneously. When installing the IDE and running it, enter Tools > Options >          General, then unmark Allow only single Thonny Instance.
 - Node-RED: A flow diagram that sends data from Thonny to Tulip using the MQTT.
   - Node-RED can be accessed by selecting one of the Edge Devices by their IP address available in your local Tulip instance. When entering the menu of the Edge I/O,       click on the Node-RED editor link.
 - Edge I/O: A Tulip compatible edge device required for sending data between Tulip and Thonny using Node-RED.
@@ -47,14 +59,14 @@ pip install setuptools
 python -m esptool
 ```
 
-3. Connect the motherboard to your computer using a USB cable. A red light on the motherboard should turn on if properly connected. Find and remember which COM port is used by opening the device manager on Windows (see Ports.) 
+3. Connect the motherboard to your computer using a USB cable. A red light on the motherboard should turn on if properly connected. Find and remember which COM port is used by opening the device manager on Windows (see Ports.)
 
   NOTE! If the port is not detected and is unknown, download the USB serial driver here https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers?tab=downloads. Unzip the downloaded file, enter the device manager and find the COM port that is unknown. Update the driver by browsing your computer for drivers and select the CP2012 folder that you have unzipped. The name of the Silicon Valley driver should appear.
 
 4. Download the latest version of MicroPython from https://micropython.org/download/#esp32. Select ESP32 by Espressif and download the latest .bin release.
 5. Open Thonny IDE options and enter the Interpreter section. Select MicroPython (ESP32) as the interpreter and select Silicon Labs CP210x USB to UART Bridge (COMx) as the port.
 6. Before pressing OK in the Thonny Options window, click on "Install or update MicroPython" and select the same port you have chosen on the previous step. The firmware is the .bin file downloaded on step 4. Then, select From image file (Keep) as the flash mode and check "Erase flash before installing." Press Install, this process may take a minute. When the installation is done, leave the window and press OK. You are now configuring the motherboard om COMx.
-7. Copy the following HC-SR04 MicroPython Library into a file in Thonny and save the script with the name hcsr04.py to the MicroPython device. The library can be found in https://github.com/rsc1975/micropython-hcsr04 and is not part of the standard MicroPython library by default. It is recommended to save the library under a separate folder, in case,,,
+7. Copy the following HC-SR04 MicroPython Library into a file in Thonny and save the script with the name hcsr04.py to the MicroPython device. The library can be found in https://github.com/rsc1975/micropython-hcsr04 and is not part of the standard MicroPython library by default. It is recommended to save the library under a separate folder, in case the COM port of any motherboards changes when reconnecting the motherboards to different USB ports.
 
 ```
 
@@ -223,8 +235,9 @@ while True:
 
 #### Node-RED
 
-20. Access the edge device by its local IP 
+20. Access the edge device by its local IP address.
 
+21. Create a Node-RED flow diagram according to the one below (picture is missing)
 
 ### Setting up the sensor with ESP8266 (pictures will come later)
 
@@ -232,7 +245,9 @@ while True:
 
 ![Circuit Diagram Wemos D1 Mini ESP8266 jpg](https://user-images.githubusercontent.com/62876523/215798813-8faaef98-5c49-42ef-a10f-ff2121305566.jpg)
 
-2. 
+2. Enter Device Manager and see if the motherboard has been properly connected. USB-SERIAL CH340 should be shown under the Ports section.
+
+3. Download the latest version of MicroPython from https://micropython.org/download/esp8266-1m/. Download the latest .bin release.
 
 Links helpful for this project:
 https://randomnerdtutorials.com/micropython-hc-sr04-ultrasonic-esp32-esp8266/
