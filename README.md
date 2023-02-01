@@ -8,7 +8,7 @@ This project is about connecting the sensors to Tulip.
 
 ## Project overview
 
-The purpose of this project is to explain how to set up two HC-SR04 Ultrasonic Sensors using the MicroPython firmware. Moreover, I will explain how to send data from the sensor to NODE-Red and Tulip.
+The purpose of this project is to explain how to set up two HC-SR04 Ultrasonic Sensors using the MicroPython firmware. Moreover, I will explain how to send data from the sensor to Node-RED and Tulip.
 
 ### Materials
 
