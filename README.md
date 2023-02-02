@@ -32,13 +32,14 @@ Each sensor and motherboard is using separate breadboards.
 
 The following were used when setting up the environment for the two sensors:
 
+- Python (latest version)
 - Thonny IDE: A beginner-friendly Python editor. Download it by entering the following link: https://thonny.org/
   - NOTE! Two instances of this IDE are required in order for both sensors to work simultaneously. When installing the IDE and running it, enter Tools > Options >          General, then unmark Allow only single Thonny Instance.
-- Node-RED: A flow diagram that sends data from Thonny to Tulip using the MQTT.
-  - Node-RED can be accessed by selecting one of the Edge Devices by their IP address available in your local Tulip instance. When entering the menu of the Edge I/O,       click on the Node-RED editor link.
 - Edge I/O: A Tulip compatible edge device required for sending data between Tulip and Thonny using Node-RED.
 - Tulip Platform: A no-code platform that receives data from the Node-RED diagram created through the Edge IO.
-- Python (latest version)
+- Node-RED: A flow diagram that sends data from Thonny to Tulip using the MQTT.
+  - Node-RED can be accessed by selecting one of the Edge Devices by their IP address available in your local Tulip instance. When entering the menu of the Edge I/O,       click on the Node-RED editor link.
+
 
 ## Instructions
 
@@ -46,20 +47,20 @@ Below are instructions how to setup the two scanners using different motherboard
 
 Each Thonny IDE instance will have a different intepreter.
 
-### Setting up the sensor with ESP32 (pictures will come later)
+### Setting up the sensor using ESP32
 
 1. Setup the motherboard on the breadboard according to the circuit diagram below.
 
 ![Circuit Diagram AZ-Delivery ESP32-WROOM-32 jpg](https://user-images.githubusercontent.com/62876523/215798947-b83b623d-9e07-45c1-a751-db97a09bbacb.jpg)
 
-2. Install esptool.py and setuptools by entering the following commands
+2. Install esptool.py and setuptools by entering the following commands in the command prompt (sometimes you need to access it as an Admin):
 ```
 pip install esptool
 pip install setuptools
 python -m esptool
 ```
 
-3. Connect the motherboard to your computer using a USB cable. A red light on the motherboard should turn on if properly connected. Find and remember which COM port is used by opening the device manager on Windows. (see Ports)
+3. Connect the motherboard to your computer using a USB-C cable. A red light on the motherboard should turn on if properly connected. Find and remember which COM port is used by opening the device manager on Windows. (see Ports)
 
 NOTE! If the port is not detected and is unknown, download the USB serial driver here https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers?tab=downloads. Unzip the downloaded file, enter the device manager and find the COM port that is unknown. Update the driver by browsing your computer for drivers and select the CP2012 folder that you have unzipped. The name of the Silicon Valley driver should appear.
 
