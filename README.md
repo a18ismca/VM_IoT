@@ -446,23 +446,29 @@ while True:
 
 21. Create a Node-RED flow diagram according to the one below.
 
+![image](https://user-images.githubusercontent.com/62876523/216608318-736178f7-5ade-43c1-9585-016bf7ed714c.png)
+
 The diagram needs the following:
 - A "debug" node, also known as the msg.payload node. This is the actual intended message.
 - A "mqtt in" node, which fetches the data from the topic in MQTT. Connect the node with "debug". Then, go to Properties by double-clicking the same node.
-  - Copy the topic where the sensor data is visualized and paste it into the Topic attribute
+  - Copy the topic where the sensor data is visualized and paste it into the Topic attribute.
   - The server is a MQTT one.
   - The output is a parsed JSON object.
   - Naming it is optional, but name it Sensor 2 Distance (ESP8266).
  - A "change" node, in order to convert the payload from a JSON object to a number. Connect the node with "mqtt in".
   - Set the data type of "msg.payload" to a number.
  - A "tulip-machine-attribute" node, which will act as the Tulip API which is mapped to the attribute you have created under "Machines" in Tulip. Connect the node with "mqtt in".
-  - Copy-paste the mapped JSON attribute you have saved into "Device info". Rename t the attribute to 
+   - Copy-paste the mapped JSON attribute you have saved into "Device info". Rename the attribute to the same name as in the machine attribute in Tulip.
+   - Use EDIT ME as a custom authentication.
+   - Use "msg.payload" as an attribute source.
 
-![image](https://user-images.githubusercontent.com/62876523/216608318-736178f7-5ade-43c1-9585-016bf7ed714c.png)
+### Testing
+
+22. Deploy the changes you have done in Node-RED. Make sure the sensor2.py script is running. If set up correctly and according to step 21, you should see that the machine attribute for Sensor 2 machine receives data. 
+
+23. When Tulip is receiving data from Node-RED, you are ready to use the data when developing various apps in Tulip!
 
 
-
-22. If the Node-RED diagram is correct, it should receive data from the topic specified in the "mqqt in" node.
 
 Links helpful for this project:
 https://randomnerdtutorials.com/micropython-hc-sr04-ultrasonic-esp32-esp8266/
