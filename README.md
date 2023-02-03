@@ -223,7 +223,7 @@ while True:
 
 #### MQTT Explorer (Keep the sensor1.py script running in Thonny while configuring MQTT Explorer)
 
-14. Download the MQTT Explorer file on the following link: http://mqtt-explorer.com/. Install it.
+14. Download MQTT Explorer on the following link: http://mqtt-explorer.com/. Install it.
 
 15. When opening the MQTT Explorer, add a connection and name it as you want. Use the mqtt:// as a protocol and the 172.16.2.7 as the broker. Use any port you want, I have used port 1883. Save the connection and then press connect. You will receive data from the script running (I will add a picture here.)
 
@@ -235,7 +235,7 @@ while True:
 
 18. Return to the Machines section and create a machine that belongs to the machine type where the sensors will be stored. When the machine is created, map the machine attribute you have created for the sensor to the Tulip API data source. (Select a machine > Configuration > Attributes Unmapped).
 
-19. A JSON object that has a machine ID and an attribute ID should appear when the attribute has been mapped to the Tulip API. Copy and save the JSON object in case you forget how the object looked like.
+19. A JSON object that has a machine ID and an attribute ID should appear when the attribute has been mapped to the Tulip API. Copy and save the JSON object somewhere as the object will be used when defining the "tulip-machine-attribute" node in Node-RED.
 
 #### Node-RED
 
@@ -383,7 +383,7 @@ Remember to use the def by entering its parameters. The ssid is the name of the 
 10. Connect to the broker by assigning CLIENT_NAME to the broker where the data should be sent. The BROKER_ADDR is assigned to the IP address of the Tulip edge device. When done, define the topics. Use the code below for help.
 
 ```
-CLIENT_NAME = '080 Tulip/Work Instructions and TAKT/ESP32/Sensor1'
+CLIENT_NAME = '080 Tulip/Work Instructions and TAKT/ESP32/Sensor2'
 BROKER_ADDR = '172.16.2.7'
 mqttc = MQTTClient(CLIENT_NAME, BROKER_ADDR, keepalive=60)
 mqttc.connect()
@@ -424,9 +424,11 @@ while True:
 
 #### MQTT Explorer (Keep the sensor2.py script running in Thonny while configuring MQTT Explorer)
 
-14. Download the MQTT Explorer file on the following link: http://mqtt-explorer.com/. Install it.
+14. Download MQTT Explorer on the following link: http://mqtt-explorer.com/. Install it.
 
-15. When opening the MQTT Explorer, add a connection and name it as you want. Use the mqtt:// as a protocol and the 172.16.2.7 as the broker. Use any port you want, I have used port 1883. Save the connection and then press connect. You will receive data from the script running, see picture below. (I will add a picture here.)
+15. When opening the MQTT Explorer, add a connection and name it as you want. Use the mqtt:// as a protocol and the 172.16.2.7 as the broker. Use any port you want, I have used port 1883. Save the connection and then press connect. You will receive data from the script running, see picture below. 
+
+![MQTT Explorer Stats](https://user-images.githubusercontent.com/62876523/216610301-b1a4634d-b755-41c3-b263-a0908907198c.PNG)
 
 #### Tulip
 
@@ -436,13 +438,29 @@ while True:
 
 18. Return to the Machines section and create a machine that belongs to the machine type where the sensors will be stored. When the machine is created, map the machine attribute you have created for the sensor to the Tulip API data source. (Select a machine > Configuration > Attributes Unmapped).
 
-19. A JSON object that has a machine ID and an attribute ID should appear when the attribute has been mapped to the Tulip API. Copy and save the JSON object in case you forget how the object looked like.
+19. A JSON object that has a machine ID and an attribute ID should appear when the attribute has been mapped to the Tulip API. Copy and save the JSON object somewhere as the object will be used when defining the "tulip-machine-attribute" node in Node-RED.
 
 #### Node-RED
 
 20. Access the edge device by its local IP address.
 
-21. Create a Node-RED flow diagram according to the one below. (Picture is missing, will be added later)
+21. Create a Node-RED flow diagram according to the one below.
+
+The diagram needs the following:
+- A "debug" node, also known as the msg.payload node. This is the actual intended message.
+- A "mqtt in" node, which fetches the data from the topic in MQTT. Connect the node with "debug". Then, go to Properties by double-clicking the same node.
+  - Copy the topic where the sensor data is visualized and paste it into the Topic attribute
+  - The server is a MQTT one.
+  - The output is a parsed JSON object.
+  - Naming it is optional, but name it Sensor 2 Distance (ESP8266).
+ - A "change" node, in order to convert the payload from a JSON object to a number. Connect the node with "mqtt in".
+  - Set the data type of "msg.payload" to a number.
+ - A "tulip-machine-attribute" node, which will act as the Tulip API which is mapped to the attribute you have created under "Machines" in Tulip. Connect the node with "mqtt in".
+  - Copy-paste the mapped JSON attribute you have saved into "Device info". Rename t the attribute to 
+
+![image](https://user-images.githubusercontent.com/62876523/216608318-736178f7-5ade-43c1-9585-016bf7ed714c.png)
+
+
 
 22. If the Node-RED diagram is correct, it should receive data from the topic specified in the "mqqt in" node.
 
