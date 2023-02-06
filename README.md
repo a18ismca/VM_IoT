@@ -6,6 +6,18 @@ Written by Ismet Catovic. Credits to Divya Kara who has done a similar project u
 
 This project is about connecting the sensors to Tulip.
 
+## Table of Contents
+
+[Project overview](https://github.com/a18ismca/VM_IoT/edit/main/README.md#project-overview)
+
+[Materials](https://github.com/a18ismca/VM_IoT/edit/main/README.md#materials)
+
+[Environment setup](https://github.com/a18ismca/VM_IoT/edit/main/README.md#environment-setup)
+
+[Instructions](https://github.com/a18ismca/VM_IoT/edit/main/README.md#instructions)
+- [Setting up the sensor using ESP32](https://github.com/a18ismca/VM_IoT/edit/main/README.md#setting-up-the-sensor-using-esp32)
+- [Setting up the sensor using ESP8266](https://github.com/a18ismca/VM_IoT/edit/main/README.md#setting-up-the-sensor-using-esp8266)
+
 ## Project overview
 
 The purpose of this project is to explain how to set up two HC-SR04 Ultrasonic Sensors using the MicroPython firmware. Moreover, I will explain how to send data from the sensor to Node-RED and Tulip.
@@ -233,7 +245,9 @@ while True:
 
 14. Download MQTT Explorer [here.](http://mqtt-explorer.com/)
 
-15. When opening the MQTT Explorer, add a connection and name it as you want. Use the mqtt:// as a protocol and the 172.16.2.7 as the broker. Use any port you want, I have used port 1883. Save the connection and then press connect. You will receive data from the script running (I will add a picture here.)
+15. When opening the MQTT Explorer, add a connection and name it as you want. Use the mqtt:// as a protocol and the 172.16.2.7 as the broker. Use any port you want, I have used port 1883. Save the connection and then press connect. You will receive data from the script running, see picture below.
+
+![MQTT Explorer Stats ESP32](https://user-images.githubusercontent.com/62876523/216968945-c8740ae0-cd65-4381-b93f-b7fbc8f9a8f5.PNG)
 
 #### Tulip
 
@@ -247,13 +261,32 @@ while True:
 
 #### Node-RED
 
-20. Access the edge device by its local IP address.
+20. Access the edge device by its local IP address and enter Node-RED editor.
 
-21. Create a Node-RED flow diagram according to the one below. (Picture is missing)
+21. Create a Node-RED flow diagram according to the one below.
 
-22. If the Node-RED diagram is correct, it should receive data from the topic specified in the "mqqt in" node. 
+![Flow Diagram ESP32 Sensor 1](https://user-images.githubusercontent.com/62876523/216971075-26b95435-c78a-430a-83fe-4a972d6739e3.PNG)
 
-### Setting up the sensor using ESP8266 (Pictures will come later)
+
+The diagram needs the following:
+- A "debug" node, also known as the msg.payload node. This is the actual intended message.
+- A "mqtt in" node, which fetches the data from the topic in MQTT. Connect the node with "debug". Then, go to Properties by double-clicking the same node.
+  - Copy the topic where the sensor data is visualized and paste it into the Topic attribute.
+  - The server is a MQTT one.
+  - The output is a parsed JSON object.
+  - Naming it is optional, but name it Sensor 2 Distance (ESP32).
+ - A "change" node, in order to convert the payload from a JSON object to a number. Connect the node with "mqtt in".
+  - Set the data type of "msg.payload" to a number.
+ - A "tulip-machine-attribute" node, which will act as the Tulip API which is mapped to the attribute you have created under "Machines" in Tulip. Connect the node with "mqtt in".
+   - Copy-paste the mapped JSON attribute you have saved into "Device info". Rename the attribute to the same name as in the machine attribute in Tulip.
+   - Use EDIT ME as a custom authentication.
+   - Use "msg.payload" as an attribute source.
+
+22. If the Node-RED diagram is correct, it should receive data from the topic specified in the "mqqt in" node.
+
+23. When Tulip is receiving data from Node-RED to the machine attribute in step 19, you are ready to use the same data when developing various apps in Tulip!
+
+### Setting up the sensor using ESP8266
 
 1. Setup the motherboard according to the circuit diagram below.
 
@@ -447,7 +480,7 @@ while True:
 
 #### Node-RED
 
-20. Access the edge device by its local IP address.
+20. Access the edge device by its local IP address and enter Node-RED editor.
 
 21. Create a Node-RED flow diagram according to the one below.
 
@@ -471,7 +504,7 @@ The diagram needs the following:
 
 22. Deploy the changes you have done in Node-RED. Make sure the sensor2.py script is running. If set up correctly and according to step 21, you should see that the machine attribute for Sensor 2 machine receives data. 
 
-23. When Tulip is receiving data from Node-RED, you are ready to use the same data when developing various apps in Tulip!
+23. When Tulip is receiving data from Node-RED to the machine attribute in step 19, you are ready to use the same data when developing various apps in Tulip!
 
 
 
