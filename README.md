@@ -12,23 +12,27 @@ The purpose of this project is to explain how to set up two HC-SR04 Ultrasonic S
 
 ### Materials
 
-Figure 1 shows the breadboard where one motherbard is going to be placed. The first sensor uses the ESP32 device from AZ-Delivery (Fig. 2) and the other sensor uses the Wemos D1 Mini ESP8266 motherboard (Fig 3). Figure 4 shows how the sensor looks like.
+Figure 1 shows the breadboard where one motherbard is going to be placed and figure 2 shows the cables compatible to the breadboard. The first sensor uses the ESP32 device from AZ-Delivery (Fig. 2) and the other sensor uses the Wemos D1 Mini ESP8266 motherboard (Fig 3). Figure 4 shows how the sensor looks like.
 
 ![AZDelivery Mini Breadboard](https://user-images.githubusercontent.com/62876523/216941319-c7f22a92-7756-411e-9415-bcda511706e2.jpg)
 
 Figure 1. The mini breadboard manufactured by AZ-Delivery.
 
+![AZ-Delivery Breadboard Jumper Wire Cables](https://user-images.githubusercontent.com/62876523/216947995-a6e965d2-1406-4257-8651-b0cbe6390dad.jpg)
+
+Figure 2. Jumper wire cables for the breadboard.
+
 ![ESP32-WROOM-32 Motherboard](https://user-images.githubusercontent.com/62876523/215799986-183ab8ab-fea5-4151-a419-ea437d50762f.png)
 
-Figure 2. The ESP32-WROOM-32 motherboard manufactured by AZ-Delivery.
+Figure 3. The ESP32-WROOM-32 motherboard manufactured by AZ-Delivery.
 
 ![Lolin Wemos D1](https://user-images.githubusercontent.com/62876523/215805672-2d8db976-6757-4d0f-ac14-a6785e92d703.jpeg)
 
-Figure 3. The Wemos D1 ESP8266 motherboard manufactured by Lolin.
+Figure 4. The Wemos D1 ESP8266 motherboard manufactured by Lolin.
 
 ![202860728-c3ccac67-ddfc-421f-8d99-2e3cc3d8aa6a](https://user-images.githubusercontent.com/62876523/215801924-347cf8d5-c40e-4202-9e24-90afd702e666.png)
 
-Figure 4. The HC-SR04 Ultrasonic sensor.
+Figure 5. The HC-SR04 Ultrasonic sensor.
 
 Each sensor and motherboard is using separate breadboards.
 
