@@ -1,16 +1,17 @@
 # Streaming sensor data from Ultrasonic sensor HC-SR04 to the no-code platform Tulip using Thonny IDE, MQTT Explorer and Node-RED
 
-As of 06.02.2022, I am still working on this README file.
+This project was made by Ismet Catovic in the HQ of the swedish company Virtual Manufacturing.
 
-Written by Ismet Catovic. Credits to Divya Kara who has done a similar project using MQTT, Node-Red and InfluxDB to stream sensor data to Grafana. Click [here](https://github.com/divyakara/VM-IoT) for more details of Divya's project.
+Credits to Divya Kara who has done a similar project using MQTT, Node-Red and InfluxDB to stream sensor data to Grafana. Click [here](https://github.com/divyakara/VM-IoT) for more details of Divya's project. I would also like to thank Random Nerd Tutorials for a great guide of how to connect the sensors to the ESP32 and ESP8266 motherboard types.
 
-This project is about connecting the sensors to Tulip.
+This project is about connecting the sensors to the no-code frontline operations platform Tulip.
 
 ## Table of Contents
 
 [Project overview](https://github.com/a18ismca/VM_IoT/edit/main/README.md#project-overview)
 
 [Materials](https://github.com/a18ismca/VM_IoT/edit/main/README.md#materials)
+- [Links useful for this project](https://github.com/a18ismca/VM_IoT/edit/main/README.md#links-useful-for-this-project)
 
 [Environment setup](https://github.com/a18ismca/VM_IoT/edit/main/README.md#environment-setup)
 
@@ -59,7 +60,13 @@ The following were used when setting up the environment for the two sensors:
 - Tulip Platform: A no-code platform that receives data from the Node-RED diagram created through the Edge IO.
 - Node-RED: A flow diagram that sends data from Thonny to Tulip using the MQTT.
   - Node-RED can be accessed by selecting one of the Edge Devices by their IP address available in your local Tulip instance. When entering the menu of the Edge I/O,       click on the Node-RED editor link.
+  
+#### Links useful for this project
 
+- https://randomnerdtutorials.com/micropython-hc-sr04-ultrasonic-esp32-esp8266/
+- https://github.com/rsc1975/micropython-hcsr04
+- https://bhave.sh/micropython-mqtt/
+- https://randomnerdtutorials.com/getting-started-node-red-dashboard/
 
 ## Instructions
 
@@ -69,9 +76,13 @@ Each Thonny IDE instance will have a different intepreter.
 
 ### Setting up the sensor using ESP32
 
-1. Setup the motherboard on the breadboard according to the circuit diagram below.
+1. Setup the motherboard and the sensor on the breadboard according to the circuit diagram below.
 
 ![Circuit Diagram AZ-Delivery ESP32-WROOM-32 jpg](https://user-images.githubusercontent.com/62876523/215798947-b83b623d-9e07-45c1-a751-db97a09bbacb.jpg)
+
+The motherboard and the sensor should be connected to the breadboard like this:
+
+![Connecting sensor to ESP32](https://user-images.githubusercontent.com/62876523/217266209-4b5b7c4d-d58b-4111-93eb-fbd728c9f69e.JPG)
 
 2. Install esptool.py and setuptools by entering the following commands in the command prompt (sometimes you need to access it as an Admin):
 ```
@@ -292,6 +303,10 @@ The diagram needs the following:
 
 ![Circuit Diagram Wemos D1 Mini ESP8266 jpg](https://user-images.githubusercontent.com/62876523/215798813-8faaef98-5c49-42ef-a10f-ff2121305566.jpg)
 
+The motherboard and the sensor should be connected to the breadboard like this:
+
+![Connecting sensor to ESP8266](https://user-images.githubusercontent.com/62876523/217266591-d10c08d8-2404-4fcc-9c60-8b64de476090.JPG)
+
 Check the manual on the following link if you are unsure which GPIO number is corresponding to each pin of the motherboard: https://www.kjell.com/globalassets/mediaassets/855793_87294_datasheet_en.pdf?ref=2AEAD8250F
 
 2. Install esptool.py and setuptools by entering the following commands
@@ -505,10 +520,5 @@ The diagram needs the following:
 22. Deploy the changes you have done in Node-RED. Make sure the sensor2.py script is running. If set up correctly and according to step 21, you should see that the machine attribute for Sensor 2 machine receives data. 
 
 23. When Tulip is receiving data from Node-RED to the machine attribute in step 19, you are ready to use the same data when developing various apps in Tulip!
-
-
-
-Links helpful for this project:
-https://randomnerdtutorials.com/micropython-hc-sr04-ultrasonic-esp32-esp8266/
 
 
